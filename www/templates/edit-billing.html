@@ -1,0 +1,87 @@
+<ion-view view-title="Edit Billing">
+  
+  <ion-content class="padding" scroll="">
+  
+  <form ng-submit="doUpdate(frm)" novalidate="" name="frm">
+    <div class="list padding checkout">
+          <label class="item item-input item-floating-label">
+              <input type="text" autocomplete="off" class="form-control" name="first_name" placeholder="First Name" required ng-model="u.first_name">
+              <label class="control-label text-danger" ng-show="frm.first_name.$invalid && u.first_name!=''">
+                <i class="icon ion-alert"></i>
+                First name can't be empty
+              </label>
+          </label>
+          <label class="item item-input item-floating-label">
+              <input type="text" autocomplete="off" class="form-control" name="last_name" placeholder="Last Name" required ng-model="u.last_name">
+              <label class="control-label text-danger" ng-show="frm.last_name.$invalid && u.last_name!=''">
+                <i class="icon ion-alert"></i>
+                Last name can't be empty
+              </label>
+          </label>
+          <label class="item item-input item-floating-label hide">
+              <input type="email" autocomplete="off" class="form-control" name="email" placeholder="Email" required ng-model="u.email" disabled>
+          </label>
+          <label ng-show="!user.isLogin" class="item item-input item-floating-label">
+              <input type="email" autocomplete="off" class="form-control" name="email" placeholder="Email" required ng-model="u.email">
+              <label for="email" class="control-label text-danger" ng-show="frm.email.$invalid && u.email!=''">
+                <i class="icon ion-alert"></i>
+                Email can't be empty
+              </label>
+          </label>
+          <label class="item item-input item-floating-label">
+              <input type="text" autocomplete="off" class="form-control" name="phone" placeholder="Phone" required ng-model="u.phone">
+              <label for="phone" class="control-label text-danger" ng-show="frm.phone.$invalid && u.phone!=''">
+                <i class="icon ion-alert"></i>
+                Phone can't be empty
+              </label>
+          </label>
+          <label ng-click="showCountry()" class="item item-input item-floating-label item-icon-right">
+              <div class="form-control">
+                  <span ng-show="!u.country">Country</span>
+                  <span ng-show="u.country">
+                      {{tmp.country}}
+                  </span>
+                  <i class="icon ion-ios-arrow-forward"></i>
+              </div>
+          </label>
+          <label class="item item-input item-floating-label">
+              <input type="text" autocomplete="off" class="form-control" name="address_1" placeholder="Street Address" required ng-model="u.address_1">
+              <label class="control-label text-danger" ng-show="frm.address_1.$invalid && u.address_1!=''">
+                <i class="icon ion-alert"></i>
+                Street address can't be empty
+              </label>
+          </label>
+          <label class="item item-input item-floating-label">
+              <input type="text" autocomplete="off" class="form-control" name="address_2" placeholder="Apartment, suit, unit etc. (optional)" ng-model="u.address_2">
+          </label>
+          <label class="item item-input item-floating-label">
+              <input type="text" autocomplete="off" class="form-control" name="city" placeholder="Town/City" required ng-model="u.city">
+              <label class="control-label text-danger" ng-show="frm.city.$invalid && u.city!=''">
+                <i class="icon ion-alert"></i>
+                Town/city can't be empty
+              </label>
+          </label>
+          <label class="item item-input item-floating-label">
+              <input type="text" autocomplete="off" class="form-control" name="state" placeholder="State" required ng-model="u.state">
+              <label class="control-label text-danger" ng-show="frm.state.$invalid && u.state!=''">
+                <i class="icon ion-alert"></i>
+                State can't be empty
+              </label>
+          </label>
+
+          <label class="item item-input item-floating-label">
+              <input type="text" autocomplete="off" class="form-control" name="postcode" placeholder="Zip Code" required ng-model="u.postcode">
+              <label for="postcode" class="control-label text-danger" ng-show="frm.postcode.$invalid && u.postcode!=''">
+                <i class="icon ion-alert"></i>
+                Zipcode can't be empty
+              </label>
+          </label>
+        
+    </div>
+    <label class="">
+      <button class="button button-full button-balanced ink round" ng-disabled="frm.$invalid">Save</button>
+    </label>
+  </form> 
+      
+  </ion-content>
+</ion-view>

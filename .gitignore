@@ -1,0 +1,12 @@
+/.tmp/
+/.vscode/
+/node_modules/
+/platforms/
+/plugins/
+npm-debug.log
+/typings/
+.DS_Store
+.android-release-unsigned.apk
+./*.apk
+/builds/
+/builds/*
