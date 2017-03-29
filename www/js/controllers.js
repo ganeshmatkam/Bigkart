@@ -187,7 +187,6 @@ app.controller('HomeCtrl', function ($scope, $timeout, $ionicSlideBoxDelegate, $
         Data.get('/api/slides.php')
             .then(function (x) {
                 $scope.slides = x;
-                console.log(x);
                 var slide, layer, fsize;
                 for (var i = 0; i < $scope.slides.length; i++) {
                     slide = $scope.slides[i];
@@ -199,12 +198,11 @@ app.controller('HomeCtrl', function ($scope, $timeout, $ionicSlideBoxDelegate, $
                             fsize = parseInt(layer.height);
                             fsize = (fsize <= 80) ? fsize/1.4 : fsize/2;
                             layer.height = fsize;
-                            console.log(layer);
                         }
 
                         if (layer.type === 'text') {
                             fsize = parseInt(layer.static_styles['font-size'].desktop.split('px')[0]);
-                            fsize = (fsize <= 22) ? fsize/1.2 : fsize/2;
+                            fsize = (fsize <= 22) ? fsize/1.2 : fsize/2.2;
                             layer.static_styles['font-size'].desktop = fsize + 'px';
                         }
                     }
@@ -214,6 +212,14 @@ app.controller('HomeCtrl', function ($scope, $timeout, $ionicSlideBoxDelegate, $
                 $scope.showError("Check your connection!");
             });
     }
+
+    WC.api().get('products?filter[featured]=yes', function (err, data, res) {
+            if (err) console.log(err);
+            $scope.featured_products = JSON.parse(res).products;
+            $ionicLoading.hide();
+            $ionicScrollDelegate.resize();
+            console.log($scope.featured_products);
+        })
 
     $scope.doRefresh = function () {
         page = 1;
@@ -523,7 +529,7 @@ app.controller('CategoryCtrl', function ($scope, $timeout, $ionicLoading, $ionic
     $scope.doRefresh = function () {
         page = 1;
         //WC.api().get('products?filter[featured]=yes'
-        WC.api().get('products?filter[featured]=yes' + '&page=' + page, function (err, data, res) {
+        WC.api().get('products?filter[category]=' + category + '&page=' + page, function (err, data, res) {
             if (err) console.log(err);
             //console.log(JSON.parse(res));
             $scope.products = JSON.parse(res).products;

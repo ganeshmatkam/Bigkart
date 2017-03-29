@@ -25,7 +25,7 @@
                                  <div ng-if="::(layer.type == 'image')" style="position:absolute;top:{{::layer.top.desktop/2}}px;left:{{::layer.left.desktop/2}}px;">
                                     <img ng-src="{{::(layer.image_url)}}" style="height:{{layer.height}}px;width:auto;"> 
                                 </div>
-                                <div style="position:absolute;z-index:11;top:{{::layer.top.desktop/2}}px;left:{{::layer.left.desktop/2}}px;">
+                                <div style="position:relative;z-index:11;top:{{::layer.top.desktop/2}}px;left:{{::layer.left.desktop/2}}px;">
                                     <span ng-if="::(layer.type == 'text')" style="font-size:{{::layer.static_styles['font-size'].desktop}};color:{{::layer.static_styles['color'].desktop}};" ng-bind-html="::layer.text">  </span>
                                     
                                 </div>
@@ -56,10 +56,7 @@
         <div ng-if="featured_products" class="item item-divider">
             FEATURED PRODUCTS
         </div>
-        <div ng-if="products" class="item item-divider">
-            NEWEST PRODUCTS
-        </div>
-        <div class="row grid" ng-repeat="x in products track by $index" ng-if="$index%2==0">
+         <div class="row grid" ng-repeat="x in featured_products track by $index" ng-if="$index%2==0">
             <div class="col col-50 ink item" ng-if="$index < products.length" ui-sref="app.product({id: products[$index].id})">
                 <div class="badge">
                     <span ng-if="!products[$index].in_stock" class="sold">Sold out</span>
@@ -95,6 +92,26 @@
                 </div>
             </div>
         </div>
+        
+        <div ng-if="products" class="item item-divider">
+            NEWEST PRODUCTS
+        </div>
+        <div class="list card-items">
+			<a class="card item item-thumbnail-left item-button-right" ng-repeat="x in products track by $index" ng-click="gotoProduct(x)">
+				<img ng-src="{{products[$index].featured_src ? products[$index].featured_src : 'img/product.png'}}" class="image" style="border-radius:0px;">
+				<h2>{{products[$index].title}}</h2>
+				<p>
+					<span ng-bind-html="products[$index].price | currency:format:decimal"></span>
+					<del ng-show="products[$index].regular_price > 0 && products[$index].on_sale" ng-bind-html="products[$index].regular_price | currency:format:decimal"></del>
+					<div class="badge" style="position:relative;top:0px !important;">
+						<span ng-if="!products[$index].in_stock" class="sold">Sold out</span>
+						<span ng-show="products[$index].regular_price > 0 && products[$index].on_sale" class="sale">
+		                        {{products[$index] | discount | number:0}}% OFF
+		                    </span>
+					</div>
+				</p>
+			</a>
+		</div>
         <ion-infinite-scroll on-infinite="loadMore()" distance="10%" ng-if="more"></ion-infinite-scroll>
     </ion-content>
     <scroll-to-top-button animate="true">
