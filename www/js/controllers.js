@@ -22,7 +22,7 @@ app.directive('focusMe', function ($timeout) {
     };
 });
 
-app.controller('AppCtrl', function ($scope, $state, $ionicPlatform, $cordovaDialogs, $timeout, $ionicLoading, $ionicSideMenuDelegate, $state, WC, Shop, AuthService) {
+app.controller('AppCtrl', function ($scope, $state, $ionicPlatform, $cordovaDialogs, $timeout, $ionicLoading, $ionicSideMenuDelegate, WC, Shop, AuthService) {
     $scope.appname = Shop.name;
     $scope.appversion = Shop.version;
     $scope.homeSlider = Shop.homeSlider;
@@ -187,6 +187,28 @@ app.controller('HomeCtrl', function ($scope, $timeout, $ionicSlideBoxDelegate, $
         Data.get('/api/slides.php')
             .then(function (x) {
                 $scope.slides = x;
+                console.log(x);
+                var slide, layer, fsize;
+                for (var i = 0; i < $scope.slides.length; i++) {
+                    slide = $scope.slides[i];
+                    slide.layers = JSON.parse(slide.layers);
+                    for (var j = 0; j < slide.layers.length; j++) {
+                        layer = slide.layers[j];
+                        
+                        if (layer.type === 'image') {
+                            fsize = parseInt(layer.height);
+                            fsize = (fsize <= 80) ? fsize/1.4 : fsize/2;
+                            layer.height = fsize;
+                            console.log(layer);
+                        }
+
+                        if (layer.type === 'text') {
+                            fsize = parseInt(layer.static_styles['font-size'].desktop.split('px')[0]);
+                            fsize = (fsize <= 22) ? fsize/1.2 : fsize/2;
+                            layer.static_styles['font-size'].desktop = fsize + 'px';
+                        }
+                    }
+                }
                 $ionicSlideBoxDelegate.update();
             }, function (x) {
                 $scope.showError("Check your connection!");
@@ -376,7 +398,7 @@ app.controller('ProductCtrl', function ($scope, $state, $timeout, $filter, $cord
                 $scope.pqty--;
             }
         }
-        else{
+        else {
             $scope.pqty = 1;
         }
 
@@ -491,16 +513,17 @@ app.controller('ProductCtrl', function ($scope, $state, $timeout, $filter, $cord
     };
 })
 
-app.controller('CategoryCtrl', function ($scope, $timeout, $ionicLoading, $ionicScrollDelegate, $stateParams, WC, $state, Shop, $ionicPopup) {
+app.controller('CategoryCtrl', function ($scope, $timeout, $ionicLoading, $ionicScrollDelegate, $stateParams, WC, $state, Shop, $ionicPopup, $cordovaToast) {
     $scope.more = false;
     var page = 1;
     var category = $stateParams.slug.replace("-", " ");
     $scope.title = $stateParams.title;
-
+    console.log(category);
     $ionicLoading.show();
     $scope.doRefresh = function () {
         page = 1;
-        WC.api().get('products?filter[category]=' + category + '&page=' + page, function (err, data, res) {
+        //WC.api().get('products?filter[featured]=yes'
+        WC.api().get('products?filter[featured]=yes' + '&page=' + page, function (err, data, res) {
             if (err) console.log(err);
             //console.log(JSON.parse(res));
             $scope.products = JSON.parse(res).products;

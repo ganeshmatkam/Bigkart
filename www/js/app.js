@@ -7,7 +7,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova', 
   ConsumerKey                         : 'ck_c6dddbf6b4fedc58d86273680b2128b998e83f94', // Get this from your WooCommerce
   ConsumerSecret                      : 'cs_7bad46c803000626dc7a558581b3c45009ca4c6a', // Get this from your WooCommerce
 
-  homeSlider                          : false, // If you dont want to use home slider, set it to FALSE
+  homeSlider                          : true, // If you dont want to use home slider, set it to FALSE
   CurrencyFormat                      : true, // If you want to use currency format, set it to TRUE
   shipping                            : [
                                           {id: 'flat_rate:4', name: 'Local Pickup', cost: 0},

@@ -381,10 +381,12 @@ ion-spinner.onload {
 
 /* HOME */
 
-.home .slider {
-    height: 250px;
-    margin-bottom: 5px;
-    background: white;
+.home {
+    .slider {
+        height: 200px;
+        margin-bottom: 5px;
+        background: white;
+        }
 }
 
 .ion-record:before {
@@ -399,6 +401,8 @@ ion-spinner.onload {
 .home .slider a .img {
     background-size: contain;
 }
+
+
 
 .home .row, .home, .home .item.item-divider {
     background: #e4e9ee;

@@ -1,5 +1,5 @@
 <ion-view view-title="{{appname}}">
-	<ion-nav-buttons side="right">
+    <ion-nav-buttons side="right">
         <div class="cart-total ink">
             <button class="button ink icon-cart button-icon button-clear ion-ios-search-strong" ui-sref="quicksearch"></button>
         </div>
@@ -10,29 +10,31 @@
             <button class="button ink button-icon button-clear fa fa-shopping-basket"></button>
         </div>
     </ion-nav-buttons>
-	<ion-content class="home bg" overflow-scroll="true" scroll-to-top="150" delegate-handle="scroller">
-        <ion-refresher
-            on-refresh="doRefresh()">
+    <ion-content class="home bg" overflow-scroll="true" scroll-to-top="150" delegate-handle="scroller">
+        <ion-refresher on-refresh="doRefresh()">
         </ion-refresher>
         <div class="slider" ng-if="homeSlider">
-            <ion-slide-box auto-play="1000" does-continue="true">
-                <ion-slide >
-                    <a href="#/app/{{x.params}}">
-                        <div class="img" style="background-image: url(img/slide1.png)"></div>
+            <!--<ion-slide-box auto-play="1000" does-continue="true" ng-if="slides.length">-->
+            <ion-slide-box does-continue="false" ng-if="slides.length">
+
+                <ion-slide ng-repeat="x in slides track by x.id">
+                    <!--<a href="#/app/{{x.params}}">-->
+                        <div class="img" style="background-image: url({{x.img}})"></div>
+                        <div style="position: relative;height: 250px;width: 100%;top: 0;margin-top: -200px;top: 0px;z-index:10;">
+                            <div ng-repeat="layer in ::x.layers track by $index">
+                                 <div ng-if="::(layer.type == 'image')" style="position:absolute;top:{{::layer.top.desktop/2}}px;left:{{::layer.left.desktop/2}}px;">
+                                    <img ng-src="{{::(layer.image_url)}}" style="height:{{layer.height}}px;width:auto;"> 
+                                </div>
+                                <div style="position:absolute;z-index:11;top:{{::layer.top.desktop/2}}px;left:{{::layer.left.desktop/2}}px;">
+                                    <span ng-if="::(layer.type == 'text')" style="font-size:{{::layer.static_styles['font-size'].desktop}};color:{{::layer.static_styles['color'].desktop}};" ng-bind-html="::layer.text">  </span>
+                                    
+                                </div>
+                               
+                            </div>
+                        </div>
+
                         <ion-spinner class="onload"></ion-spinner>
-                    </a>
-                </ion-slide>
-                 <ion-slide >
-                    <a href="#/app/{{x.params}}">
-                        <div class="img" style="background-image: url(img/slide2.png)"></div>
-                        <ion-spinner class="onload"></ion-spinner>
-                    </a>
-                </ion-slide>
-                 <ion-slide >
-                    <a href="#/app/{{x.params}}">
-                        <div class="img" style="background-image: url(img/slide3.png)"></div>
-                        <ion-spinner class="onload"></ion-spinner>
-                    </a>
+                    
                 </ion-slide>
             </ion-slide-box>
         </div>
@@ -51,11 +53,14 @@
                 </div>
             </ion-scroll>
         </div>
+        <div ng-if="featured_products" class="item item-divider">
+            FEATURED PRODUCTS
+        </div>
         <div ng-if="products" class="item item-divider">
             NEWEST PRODUCTS
         </div>
-		<div class="row grid" ng-repeat="x in products track by $index" ng-if="$index%2==0">
-			<div class="col col-50 ink item" ng-if="$index < products.length" ui-sref="app.product({id: products[$index].id})">
+        <div class="row grid" ng-repeat="x in products track by $index" ng-if="$index%2==0">
+            <div class="col col-50 ink item" ng-if="$index < products.length" ui-sref="app.product({id: products[$index].id})">
                 <div class="badge">
                     <span ng-if="!products[$index].in_stock" class="sold">Sold out</span>
                     <span ng-show="products[$index].regular_price > 0 && products[$index].on_sale" class="sale">
@@ -68,11 +73,11 @@
                 <div class="img" style="background-image: url({{products[$index].featured_src ? products[$index].featured_src : 'img/product.png'}})"></div>
                 <div class="info">
                     <h3>{{products[$index].title}}</h3>
-										<span ng-bind-html="products[$index].price | currency:format:decimal"></span>
+                    <span ng-bind-html="products[$index].price | currency:format:decimal"></span>
                     <del ng-show="products[$index].regular_price > 0 && products[$index].on_sale" ng-bind-html="products[$index].regular_price | currency:format:decimal"></del>
-			    		</div>
+                </div>
             </div>
-							<div class="col col-50 ink item" ng-if="$index+1 < products.length" ui-sref="app.product({id: products[$index+1].id})">
+            <div class="col col-50 ink item" ng-if="$index+1 < products.length" ui-sref="app.product({id: products[$index+1].id})">
                 <div class="badge">
                     <span ng-if="!products[$index+1].in_stock" class="sold">Sold out</span>
                     <span ng-show="products[$index+1].regular_price > 0 && products[$index+1].on_sale" class="sale">
@@ -85,13 +90,13 @@
                 <div class="img" style="background-image: url({{products[$index+1].featured_src ? products[$index+1].featured_src : 'img/product.png'}})"></div>
                 <div class="info">
                     <h3 ng-bind-html="products[$index+1].title"></h3>
-										<span ng-bind-html="products[$index+1].price | currency:format:decimal"></span>
-										<del ng-show="products[$index+1].regular_price > 0 && products[$index+1].on_sale" ng-bind-html="products[$index+1].regular_price | currency:format:decimal"></del>
+                    <span ng-bind-html="products[$index+1].price | currency:format:decimal"></span>
+                    <del ng-show="products[$index+1].regular_price > 0 && products[$index+1].on_sale" ng-bind-html="products[$index+1].regular_price | currency:format:decimal"></del>
                 </div>
             </div>
-		</div>
+        </div>
         <ion-infinite-scroll on-infinite="loadMore()" distance="10%" ng-if="more"></ion-infinite-scroll>
-	</ion-content>
+    </ion-content>
     <scroll-to-top-button animate="true">
         <div class="float-button">
             <span class="height-fix">
