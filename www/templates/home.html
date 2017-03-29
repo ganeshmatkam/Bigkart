@@ -20,16 +20,14 @@
                 <ion-slide ng-repeat="x in slides track by x.id">
                     <!--<a href="#/app/{{x.params}}">-->
                         <div class="img" style="background-image: url({{x.img}})"></div>
-                        <div style="position: relative;height: 250px;width: 100%;top: 0;margin-top: -200px;top: 0px;z-index:10;">
+                        <div style="position: relative;height: 220px;width: 100%;top: 0;margin-top: -220px;top: 0px;z-index:10;">
                             <div ng-repeat="layer in ::x.layers track by $index">
                                  <div ng-if="::(layer.type == 'image')" style="position:absolute;top:{{::layer.top.desktop/2}}px;left:{{::layer.left.desktop/2}}px;">
                                     <img ng-src="{{::(layer.image_url)}}" style="height:{{layer.height}}px;width:auto;"> 
                                 </div>
-                                <div style="position:relative;z-index:11;top:{{::layer.top.desktop/2}}px;left:{{::layer.left.desktop/2}}px;">
+                                <div style="position:relative;z-index:11;top:{{::layer.top.desktop/2}}px;left:{{::layer.left.desktop/2}}px;max-width:250px;">
                                     <span ng-if="::(layer.type == 'text')" style="font-size:{{::layer.static_styles['font-size'].desktop}};color:{{::layer.static_styles['color'].desktop}};" ng-bind-html="::layer.text">  </span>
-                                    
                                 </div>
-                               
                             </div>
                         </div>
 
@@ -82,7 +80,7 @@
                     </span>
                 </div>
 
-                <ion-spinner class="onload"></ion-spinner>
+                <!--<ion-spinner class="onload"></ion-spinner>-->
 
                 <div class="img" style="background-image: url({{products[$index+1].featured_src ? products[$index+1].featured_src : 'img/product.png'}})"></div>
                 <div class="info">

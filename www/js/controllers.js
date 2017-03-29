@@ -202,7 +202,7 @@ app.controller('HomeCtrl', function ($scope, $timeout, $ionicSlideBoxDelegate, $
 
                         if (layer.type === 'text') {
                             fsize = parseInt(layer.static_styles['font-size'].desktop.split('px')[0]);
-                            fsize = (fsize <= 22) ? fsize/1.2 : fsize/2.2;
+                            fsize = (fsize <= 22) ? fsize/1.4 : fsize/2.7;
                             layer.static_styles['font-size'].desktop = fsize + 'px';
                         }
                     }

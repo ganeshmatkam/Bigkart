@@ -10116,9 +10116,11 @@ ion-spinner.onload {
 /*  ==========  END MENU  ===========    */
 /* HOME */
 .home .slider {
-  height: 200px;
+  height: 220px;
   margin-bottom: 5px;
   background: white; }
+  .home .slider .img {
+    border-radius: 0px; }
 
 .ion-record:before {
   font-size: 10px; }

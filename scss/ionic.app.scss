@@ -383,9 +383,12 @@ ion-spinner.onload {
 
 .home {
     .slider {
-        height: 200px;
+        height: 220px;
         margin-bottom: 5px;
         background: white;
+        .img{
+            border-radius:0px;
+        }
         }
 }
 
